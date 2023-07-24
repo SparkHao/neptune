@@ -124,7 +124,7 @@ where
     ) -> Result<Self, Error> {
         let constants = GpuConstants(PoseidonConstants::<F, A>::new_with_strength(strength));
         let program = ec_gpu_gen::program!(device)?;
-
+        info!("new_with_strength");
         // Allocate the buffer only once and re-use it in the hashing steps
         let constants_buffer = match program {
             #[cfg(feature = "cuda")]
@@ -139,6 +139,7 @@ where
             #[cfg(feature = "opencl")]
             Program::Opencl(ref opencl_program) => opencl_program.run(
                 |prog, _| -> Result<Buffer<F>, Error> {
+                    info!("-----program opencl------");
                     let buffer = prog.create_buffer_from_slice(&constants.to_vec())?;
                     Ok(Buffer::OpenCl(buffer))
                 },
