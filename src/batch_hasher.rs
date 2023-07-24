@@ -54,6 +54,7 @@ where
     #[cfg(any(feature = "cuda", feature = "opencl"))]
     /// Create a new GPU batcher for a certain device.
     pub fn new(device: &Device, max_batch_size: usize) -> Result<Self, Error> {
+        info!("batch new");
         Self::with_strength(device, DEFAULT_STRENGTH, max_batch_size)
     }
 
@@ -64,6 +65,7 @@ where
         strength: Strength,
         max_batch_size: usize,
     ) -> Result<Self, Error> {
+        info!("with_strength");
         Ok(Self::OpenCl(ClBatchHasher::<F, A>::new_with_strength(
             device,
             strength,
