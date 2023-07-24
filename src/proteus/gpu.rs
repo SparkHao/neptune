@@ -131,6 +131,7 @@ where
             Program::Cuda(ref cuda_program) => cuda_program.run(
                 |prog, _| -> Result<Buffer<F>, Error> {
                     let buffer = prog.create_buffer_from_slice(&constants.to_vec())?;
+                    info!("-----program cuda------");
                     Ok(Buffer::Cuda(buffer))
                 },
                 (),
