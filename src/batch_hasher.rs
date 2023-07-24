@@ -10,6 +10,7 @@ use crate::{Arity, BatchHasher, NeptuneField, Strength, DEFAULT_STRENGTH};
 use ec_gpu_gen::rust_gpu_tools::Device;
 use ff::PrimeField;
 use generic_array::GenericArray;
+use log::info;
 
 #[allow(clippy::large_enum_variant)]
 pub enum Batcher<F, A>
@@ -46,6 +47,7 @@ where
         let device = *Device::all()
             .first()
             .ok_or(Error::ClError(ClError::DeviceNotFound))?;
+        info!("device: {:?}, max_batch_size: {}", device, max_batch_size);
         Self::new(device, max_batch_size)
     }
 
