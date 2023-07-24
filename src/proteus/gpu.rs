@@ -123,10 +123,11 @@ where
         max_batch_size: usize,
     ) -> Result<Self, Error> {
         info!("new_with_strength");
-        println!("new_with_strength");
-        let constants = GpuConstants(PoseidonConstants::<F, A>::new_with_strength(strength));
-        let program = ec_gpu_gen::program!(device)?;
 
+        let constants = GpuConstants(PoseidonConstants::<F, A>::new_with_strength(strength));
+        println!("new_with_strength1");
+        let program = ec_gpu_gen::program!(device)?;
+        println!("new_with_strength2");
         // Allocate the buffer only once and re-use it in the hashing steps
         let constants_buffer = match program {
             #[cfg(feature = "cuda")]
